@@ -1,0 +1,11 @@
+<!-- templates/add_label.html -->
+{% extends "shop/shop_base.html" %}
+{% block title %} add search libels{% endblock title %}
+{% block content %}
+  <h1>Add New Label</h1>
+  <form method="POST" action="{% url 'search:add_label' %}" class="form-control">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Label</button>
+  </form>
+{% endblock %}

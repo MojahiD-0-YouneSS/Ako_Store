@@ -1,0 +1,51 @@
+{% extends 'shop/shop_base.html' %}
+{% load static %}
+{% block title %}
+    Add product
+{% endblock title %}
+{% block extrastyle %}
+<link rel="stylesheet" href="{%static 'css/formSubmit.css'%}" />
+{% endblock extrastyle%}
+{% block content %} 
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 form-container">
+  <h2 class="text-2xl font-bold mb-6 text-center">Add New Product</h2>
+  <form method="post" action="{% url 'product:addProduct' %}" class="text-center regestered_cilent_form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-4">
+        <h3 class="text-lg font-bold mb-2">Product info</h3>
+        {{ product_form.as_p }}
+    </div>
+    <div class="mb-4">
+        <h3 class="text-lg font-bold mb-2">review</h3>
+        {{ review_form.as_p }}
+    </div>
+    <div class="mb-4">
+        <h3 class="text-lg font-bold mb-2">Category</h3>
+        {{ categoryP_form.as_p }}
+    </div>
+    <div class="mb-4">
+        <h3 class="text-lg font-bold mb-2">Category</h3>
+        {{ categoryC_form.as_p }}
+    </div>
+    <div class="mb-4">
+        <h3 class="text-lg font-bold mb-2">tags</h3>
+        {{ tags_form.as_p }}
+    </div>
+    {% if image_form.errors or image_form.non_field_errors %}
+            <div class="mb-3 p-3 bg-danger text-white">
+                {% for field in image_form %}
+                    {{ image_form.errors }}
+                {% endfor %}
+
+                {{ image_form.non_field_errors }}
+            </div>
+      {% endif %}
+    <div class="flex items-center justify-between">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

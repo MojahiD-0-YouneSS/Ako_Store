@@ -1,0 +1,34 @@
+{% extends 'filter/product_listing.html' %}
+{% block filter %}    
+    {% if filtered_products %}
+        {% for item in items %}
+            {% if item.id %}
+                <div class="col-xs-12 col-sm-4  col-lg-2 m-2"> <!-- Added margin-bottom for spacing -->
+                    <a href="{% url 'product:detail' pk=item.id|add:0 %}">
+                    {% if item.in_stock %}
+                        <div class="px-3">
+                            <div class="card py-4"> <!-- Added border and rounded classes for styling -->
+                                {% with item.images.first as first_image %}
+                                    {% if first_image %}
+                                        <img src="{{ first_image.Product_Image.url }}" alt="{{ item.ProductName }}" class="img-fluid mb-3"> <!-- Added img-fluid and margin-bottom classes -->
+                                    {% else %}
+                                        <!-- Placeholder image or alternative content -->
+                                        <p class="alert alert-danger">No image available !</p>
+                                    {% endif %}
+                                {% endwith %}
+                                <div class="">
+                                   <div class="text-center">
+                                        <h3 class="h5 ">{{ item.ProductName }}</h3>
+                                        <p>Price: {{ item.ProductPrice }} MAD</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    </a>
+                </div>
+                
+            {% endif %}
+        {% endfor %}
+        {% endif %}        
+{% endblock filter %}

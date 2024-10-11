@@ -1,0 +1,21 @@
+<div class="container">
+    <h1>Products List</h1>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="card p-2">
+                    <h2>{{ product.ProductName }}</h2>
+                    <p>{{ product.description }}</p>
+                    <p><strong>reference number:</strong> {{ product.reference_number }}</p>
+                    {% if product.image.first %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-responsive" style="width: 200px; height: 200px;">
+                    {% else %}
+                    <p>No Image</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

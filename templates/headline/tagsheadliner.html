@@ -1,0 +1,58 @@
+<style>
+    .styled-heading {
+        font-size: 2rem;
+        color: #343a40;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #17a2b8;
+        padding-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 500;
+        background-color:#17a2b8;
+    }
+</style>
+
+<div class="row position-relative">
+    <h2 class="styled-heading">{{New}}</h2>
+        {% for headline in new_hedlined %}       
+            <div class="col-xs-12 col-sm-4 col-lg-2 mb-2">
+                {% if headline.in_stock %}
+                <div class="px-3">
+                    <a href="{% url 'product:detail' headline.id  %}" class="nav-link">
+                        <div class="card py-2">
+                        {% with headline.images.first as first_image %}
+                        {% if first_image %}
+                        <img src="{{ first_image.Product_Image.url }}" alt="{{ headline.ProductName }}" class="img-fluid mb-3">
+                        {% else %}
+                        <p class="alert alert-danger ms-1 me-1">No image available!</p>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+</div>
+<div class="row position-relative mb-3">
+    <h2 class="styled-heading">{{Limitted}}</h2>
+        {% for headline in limited_hedlined %}       
+            <div class="col-xs-12 col-sm-4 col-lg-2 mb-2">
+                {% if headline.in_stock %}
+                <div class="px-3">
+                    <a href="{% url 'product:detail' headline.id  %}" class="nav-link">
+                        <div class="card py-2">
+                        {% with headline.images.first as first_image %}
+                        {% if first_image %}
+                        <img src="{{ first_image.Product_Image.url }}" alt="{{ headline.ProductName }}" class="img-fluid mb-3">
+                        {% else %}
+                        <p class="alert alert-danger ms-1 me-1">No image available!</p>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+</div>

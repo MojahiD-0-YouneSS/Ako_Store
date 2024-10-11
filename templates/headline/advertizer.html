@@ -1,0 +1,98 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}advertisment{% endblock title %}
+
+{% block extrastyle %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        width: 50%;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+        border-radius: 10px;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    form p {
+        margin-bottom: 15px;
+    }
+    label {
+        font-weight: bold;
+    }
+    input, textarea, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    button:hover {
+        background-color: #218838;
+    }
+    .errors {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+    .errors h2 {
+        margin-top: 0;
+    }
+    .errors ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+    .errors li {
+        margin-bottom: 5px;
+    }
+</style>
+{% endblock extrastyle %}
+    
+
+{% block content %}
+<h1>Create Advertisement</h1>
+<form method="post" action="{% url 'headline:advertizment' %}" enctype="multipart/form-data" >
+    {% csrf_token %}
+    {{ ads_form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+{% if ads_form.errors %}
+    <div class="errors">
+        <h2>Errors:</h2>
+        <ul>
+            {% for field, errors in ads_form.errors.items %}
+                <li>{{ field }}: {{ errors|join:", " }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+{% endblock content %}
+    

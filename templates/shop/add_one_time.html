@@ -1,0 +1,178 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}posters{% endblock title %}
+
+{% block content %}
+<style>
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.error-message {
+    color: #a94442;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+</style>
+<div class="container mt-5">
+    <h2>Contact Us</h2>
+    <form method="post" action="{% url 'product:one_time_product' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            {{ product_form.as_p }}
+            {% if product_form.errors %}
+                <div class="error-message">
+                    {{ product_form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ image_form.as_p }}
+            {% if image_form.errors %}
+                <div class="error-message">
+                    {{ image_form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ add_form.as_p }}
+            {% if add_form.errors %}
+                <div class="error-message">
+                    {{ add_form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ color_form.as_p }}
+            {% if color_form.errors %}
+                <div class="error-message">
+                    {{ color_form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ size_form.size.label }}:
+            {{ size_form.size }}
+            {% if size_form.errors %}
+                <div class="error-message">
+                    {{ size_form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ tags_form.as_p }}
+            {% if tags_form.errors %}
+                <div class="error-message">
+                    {{ tags_form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ categoryC_form.as_p }}
+            {% if categoryC_form.errors %}
+                <div class="error-message">
+                    {{ categoryC_form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ categoryP_form.as_p }}
+            {% if categoryP_form.errors %}
+                <div class="error-message">
+                    {{ categoryP_form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ that_one_product_form.as_p }}
+            {% if that_one_product_form.errors %}
+                <div class="error-message">
+                    {{ that_one_product_form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <p class="m-1">
+                {{ fabric_form.pure.label }}
+                {{ fabric_form.pure }}
+            </p>
+            <p class="m-1">
+                {{ fabric_form.fabric.label }}
+                {{ fabric_form.fabric }}
+            </p>
+            {% if fabric_form.errors %}
+                <div class="error-message">
+                    {{ fabric_form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <p class="m-1">
+                {{ brand_form.name.label }}
+                {{ brand_form.name }}</p>
+            <p class="m-1">
+                {{ brand_form.brand_Image.label }}
+                {{ brand_form.brand_Image }}
+
+            </p>
+            {% if brand_form.errors %}
+                <div class="error-message">
+                    {{ brand_form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
+</div>
+{% endblock content %}

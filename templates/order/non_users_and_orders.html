@@ -1,0 +1,27 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}Users and Orders{% endblock %}
+
+{% block extrahead %}
+<!-- Add any additional JavaScript or CSS here if needed -->
+{% endblock %}
+
+{% block content %}
+<h1>Users and Their Orders</h1>
+<hr>
+<hr>
+<ul>
+    {% for user_order in users_orders %}     
+     {% if  user_order.orders %}
+     <li><h2 class="h2">{{ user_order.user.full_name }}</h2></li>
+    <ul>
+        {% for order in user_order.orders %}
+        <li class="list-item"> <a href="{% url 'order:shop_non_order_detail' order.id  %}"  class="nav-link"> <li class="form-control mt-1"><strong> user_order ID:</strong> {{ order.id }} || <strong>  User:</strong>  {{ user_order.user.full_name }} || <strong>  Created At: </strong>  {{ order.created_at }}</li></a><a href="{% url 'order:cancel_non_order' order.id %}" class="btn btn-danger m-1"> Cancel !</a></li>
+        {% endfor %}               
+    </ul>
+     {% endif %}
+
+    {% endfor %}
+</ul>
+
+{% endblock %}

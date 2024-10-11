@@ -1,0 +1,16 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}User Orders{% endblock %}
+
+{% block extrahead %}
+<!-- Add any additional JavaScript or CSS here if needed -->
+{% endblock %}
+
+{% block content %}
+<h1>Orders for {{ user.username }}</h1>
+<ul>
+    {% for order in orders %}
+        <li>Order Item ID: {{ order.id }}, Status: {{ order.status }}, Created At: {{ order.created_at }} <a href="{% url 'order:cancel_order' order.id %}" class="btn btn-danger m-1"> Cancel !</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

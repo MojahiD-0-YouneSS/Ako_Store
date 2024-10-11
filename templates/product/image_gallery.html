@@ -1,0 +1,14 @@
+<!-- image_gallery.html -->
+
+{% block extrastyle %}
+    
+{% endblock extrastyle %}
+    
+
+<div class="image-container" id="image-container">
+    {% for image in images %}
+        <img src="{{ image.url }}" class="w-full rounded-t selectable-image" alt="{{ item.name }}">
+    {% endfor %}
+</div>
+
+<button onclick="selectImages()">Select Images</button>

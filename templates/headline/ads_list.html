@@ -1,0 +1,32 @@
+{% extends 'shop/shop_base.html' %}
+{% block title %}Ads List{% endblock title %}
+{% block content %}
+    <h1>Ads List</h1>
+<div class="row">
+    {% for ad in ads %}
+    <div class="col-md-6 col-6 mb-2">
+            <div class="card">
+            <div class="row">
+              <div class="col-6">
+                {% if ad.image %}
+                    <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="img-responsive rounded m-2" style="width: 250px; height: 100px;">
+                {% else %}
+                <p>No Image</p>
+                {% endif %}
+              </div>
+              <div class="col-6">
+                <p> <strong> {{ ad.description }} </strong></p>
+                <h2>{{ ad.title }}</h2>
+              </div>
+            </div>
+            <div class="panel-footer">
+                <form method="post" action="{% url 'headline:delete_ad' ad_id=ad.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger m-2">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content%}

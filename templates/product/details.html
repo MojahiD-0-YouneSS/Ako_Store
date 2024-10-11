@@ -1,0 +1,522 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{ product.ProductName }}{% endblock %}
+ 
+{% block content %}
+<div class="container my-6">
+    <style>
+        .color-checkbox {
+            display: none;
+        }
+        .color-label {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #000;
+            cursor: pointer;
+        }
+        .color-label:hover {
+            opacity: 0.7;
+        }
+        .color-checkbox:checked + .color-label {
+            border: 2px solid #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .size-checkbox {
+            display: none;
+        }
+        .size-label {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            border: 2px solid #000;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            min-width: 50px;
+        }
+        .size-label:hover {
+            background-color: #f0f0f0;
+        }
+        .size-checkbox:checked + .size-label {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+        .image-container {
+            display: none;
+        }
+        .image-container.active {
+            display: block;
+        }
+        /* for card*/
+        /* Card styling */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+}
+
+.btn-lg {
+    font-size: 1.25rem;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.pb-2 {
+    padding-bottom: 0.5rem;
+}
+.blurred {
+    backdrop-filter: blur(5px); /* Blur effect */
+}
+
+    .custom-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: transparent;
+        border: none;
+        padding: 0;
+        font-size: 24px; /* Adjust size as needed */
+        color: #333; /* Color of the icon */
+        transition: color 0.3s ease;
+    }
+
+    .custom-close-btn:hover {
+        color: #ff0000; /* Change color on hover */
+    }
+
+    .custom-close-btn:focus {
+        outline: none; /* Remove focus outline */
+    }
+
+    .custom-close-btn i {
+        line-height: 1;
+    }
+
+    </style>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row g-6">
+                <div class="col-11 ms-5">
+                    {% with product.images.first as first_image %}
+                        {% if first_image %}
+                            <img src="{{ first_image.Product_Image.url }}" alt="{{ product.ProductName }}" class="img-fluid rounded" id="mainImage">
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="row">
+                {% for color, images in grouped_images.items %}
+                    <div class="image-container" id="container-{{ color }}">
+                        {% for image in images %}
+                            <div class="col-xs-4 col-sm-2 col-lg-6 m-1 btn btn-outline-success ImageContainer" style="border: solid black 2px; padding: 3px" onclick='main_Image()'>
+                                <img src="{{ image }}" alt="{{ product.ProductName }}" class="img-fluid py-1" width="100%"> <!-- Added img-fluid and margin-bottom classes -->
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6 p-4 bg-light rounded-xl">
+            <h1 class="mb-4 fs-3"><i class='bg-success rounded'>{{ product.ProductName }}</i></h1>
+            <p class="text-muted"><strong>Price: </strong>{{ product.ProductPrice }} DH</p>
+            <p class="text-muted"><strong>Seller: </strong>ILLYAS AKBOUR</p>
+        
+            {% if product %}
+                <p class="text-dark mb-4">
+                    <strong class="text-muted">Description:</strong><br>
+                    {{ product.ProductDescription }}
+                </p>
+            {% endif %}
+            <div class="row">
+                {% if request.user.is_authenticated and request.user.username == 'ILiac_Ak0' %}
+                    <div class="mt-4 p-4 rounded-xl">
+                        <a href="{% url 'product:detail' pk=product.id|add:0 %}" class="btn btn-primary mt-4 me-1">Edit</a>
+                        <a href="{% url 'product:detail' pk=product.id|add:0 %}" class="btn btn-danger mt-4">Delete</a>
+                    </div>
+                {% else %}  
+                
+                <div>  
+                    <form method="post" action="#" class="text-center" id="cartForm">
+                        {% csrf_token %}
+                        {{ quantity_form.as_p }}
+                
+                        <a href="#" class="col-4 btn btn-primary mt-4 me-1">Contact seller</a>
+                
+                        {% if request.user.is_authenticated %}
+                            <button class="col-4 btn btn-success mt-4 ms-1" type="submit" onclick="replace_action('add_to_cart', '{{ product.id }}'); show_model();">Add to Cart <i class="fas fa-cart-plus"></i></button>
+                            <button id="update" class="col-4 btn btn-success mt-4 ms-1" type="submit" onclick="replace_action('update_cart', '{{ product.id }}')">Update Cart <i class="fas fa-shopping-cart"></i></button>
+                            <a href="{% url 'cart:add_wish_list' product.id %}" class="col-4 btn btn-success mt-4 me-1" onclick="show_wishList()">Add to WishList <i class="fas fa-heart"></i></a>
+                            {% else %}
+                        <button class="col-4 btn btn-primary mt-4 me-1" type="submit" onclick="replace_action('add_to_temp_cart', '{{ product.id }}'); show_model();">Add to Cart <i class="fas fa-cart-plus"></i></button>
+                        <a href="{% url 'core:signup' %}" class="col-4 btn btn-primary mt-4 me-1">Signup <i class="fas fa-user-edit"></i></a>
+                        <a href="{% url 'cart:add_wish_list' product.id %}" class="col-4 btn btn-success mt-4 me-1" onclick="show_wishList()">Add to WishList <i class="fas fa-heart"></i></a>
+                        {% endif %}
+<!-- Cart Card -->
+<div id="cartCard" class="card" style="display: none; position: fixed; top: 10%; left: 5%; right: 5%; width: 90%; z-index: 1050;">
+    <div class="card-header">
+        <div class="row">
+        <div class="col-6">
+            <h5 class="card-title">Your Shopping Cart</h5>
+        </div>
+        <div class="col-4">
+            <button type="button" class="custom-close-btn" onclick="closeModal()" aria-label="Close">
+                <span aria-hidden="true">X</i></span>
+            </button>
+        </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="cartItems" class="row d-flex justify-content-between mt-3" style="overflow: auto; max-height: 350px;">
+        </div>
+        <a class='btn btn-primary btn-lg btn-block mt-3' href="{% url 'cart:view_cart' %}">Proceed to Checkout</a>
+        <button class="btn btn-secondary btn-lg btn-block mt-3" onclick="closeModal()">Continue Shopping</button>
+    </div>
+</div>
+<div id="wishlist_Card" class="card" style="display: none; position: fixed; top: 10%; left: 5%; right: 5%; width: 90%; z-index: 1050;">
+    <div class="card-header">
+        <div class="row">
+        <div class="col-6">
+            <h5 class="card-title">Your wishlist</h5>
+        </div>
+        <div class="col-4">
+            <button type="button" class="custom-close-btn" onclick="closewishlist()" aria-label="Close">
+                <span aria-hidden="true">X</i></span>
+            </button>
+        </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="wishlist_items" class="row d-flex justify-content-between mt-3"  style="overflow: auto; max-height: 350px;">
+        </div>
+        <a href="{% url 'cart:view_wish_list' %}" class="btn btn-success  btn-lg btn-block mt-3">view Wish List</a>
+        <button class="btn btn-secondary btn-lg btn-block mt-3" onclick="closewishlist()">Continue Shopping</button>
+    </div>
+</div>
+
+                        <script>
+                            function main_Image(){
+                                const mainImage = document.getElementById('mainImage');
+                          
+                                const thumbnails = document.querySelectorAll('.ImageContainer img');
+                            
+                                // Add a click event listener to each thumbnail
+                                thumbnails.forEach(function (thumbnail) {
+                                    thumbnail.addEventListener('click', function () {
+                                        // Change the source of the main image to the clicked thumbnail's source
+                                        mainImage.src = thumbnail.src;
+                                    });
+                                });
+                          }
+                          
+                        function show_model() { 
+                            setTimeout(function() {
+
+                            fetch("{% url 'cart:summary' %}")  // URL to your Django view
+                          .then(response => {
+                            if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                            }
+                            return response.text();
+                            })
+                          .then(html => {
+                            document.getElementById('cartItems').innerHTML = html;
+                            document.getElementById('cartCard').style.display = 'block';
+                           })
+                          .catch(error => {
+                            console.error('There was a problem with the fetch operation:', error);
+                          });
+                          }, 200)
+                        }
+                                                    
+                        function closeModal() {
+                            document.getElementById('cartCard').style.display = 'none';
+                            document.getElementById('cartItems').innerHTML = '';
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 100)
+                        }
+
+                        function show_wishList() { 
+                            setTimeout(function() {
+
+                        fetch("{% url 'cart:wish_list_summary' %}")  // URL to your Django view
+                        .then(response => {
+                            if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                            }
+                            return response.text();
+                            })
+                        .then(html => {
+                        document.getElementById('wishlist_items').innerHTML = html;
+                        document.getElementById('wishlist_Card').style.display = 'block';
+                        })
+                        .catch(error => {
+                            console.error('There was a problem with the fetch operation:', error);
+                        });
+                        }, 200)
+                        }
+                                                    
+                        function closewishlist() {
+                            document.getElementById('wishlist_Card').style.display = 'none';
+                            document.getElementById('wishlist_items').innerHTML = '';
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 200)
+                        }
+                        </script>
+                        
+                
+                    
+                        <div class="row mt-2">
+                            <h4>Select Colors and Sizes</h4>
+                            {% for color, sizes in color_size_quantity_map.items %}
+                            <div class="col-12 mb-3">
+                                <div id="color_{{ color.id }}_section" class="color-section p-1" style="border: 4px solid; border-image: linear-gradient(to right, yellow, green, blue) 1;">
+                                    <div class="row">
+                                        <div class="row mb-3 mt-2">
+                                           <div class="col-4">
+                                            <input type="radio" name="colors" value="{{ color.name }}" id="color{{ color.id }}" class="color-checkbox" onclick="showColor('{{ color.name }}', '{{ color.id }}')">
+                                            <label for="color{{ color.id }}" class="color-label" style="background-color:{{color.code}}"></label>
+                                           </div>
+                                           <div class="col-6">
+                                            <h5>{{ color.name }}</h5>
+                                           </div>
+                                        </div>
+                                        <div class="col-10 sizes-section">
+                                            <div class="row">
+                                                {% for size_info in sizes %}
+                                                <div class="col-4">
+                                                    <input type="checkbox" name="sizes" value="{{ size_info.size.size_value }}" id="size-{{ size_info.size.id }}-{{ size_info.quantity }}" class="size-checkbox" disabled>
+                                                    <label for="size-{{ size_info.size.id }}-{{ size_info.quantity }}" class="size-label">
+                                                        <strong>{{ size_info.size.size_value }} | {{ size_info.quantity }}</strong>
+                                                    </label>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                                      
+            </form>
+                </div>
+                
+                {% endif %}
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row ms-1 me-1">
+        <div class="col-12">
+            <h1 class="h5 text-center mt-2">TECHNICAL DATA SHEET / SPECIFICATIONS</h1>
+        </div>
+
+        <div class="col-6">  
+            <h1 class="h5 text-center mt-2 text-white rounded" style="background-color: #343a40;">TECHNICAL DATA SHEET</h1>
+            <div class="row ms-1 me-1">
+            Description1 
+            <br>
+            //
+            <br>
+            Content
+            </div>
+        </div>
+        <div class="col-6">
+            <h1 class="h5 text-center mt-2 text-white rounded" style="background-color: #ffd700;">SPECIFICATIONS</h1>
+            <div class="row ms-1 me-1">
+                {% if product.in_stock %}
+                <span class="alert alert-success col-3 m-1"><strong> In stock ✔ </strong></span>
+                {% else %}
+                <span class="alert alert-danger col-3 m-1"><strong> Out of stock ❌</strong></span>
+                {% endif %}
+                {% if product.customization_options %}
+                <span class="alert alert-success col-3 m-1"><strong> Customizable ✔ </strong></span>
+                {% else %}
+                <span></span>
+                {% endif %}
+                {% if product.original %}
+                <span class="alert alert-success col-3 m-1"><strong> Original ✔ </strong></span>
+                {% else %}
+                <span></span>
+                {% endif %}
+                {% if product.gifted %}
+                <span class="alert alert-success col-3 m-1"><strong> Comes with gifts ✔ </strong></span>
+                {% else %}
+                <span></span>
+                {% endif %}
+            </div>
+            <div class="row">
+                <p class="col-md-6"><strong><i>Available from: {{ product.available_from }}</i></strong></p>
+                <p class="col-md-6"><strong><i>Available until: {{ product.available_until }}</i></strong></p>
+            </div>
+            <div class="row ms-1 me-1">
+                <h3>Tags:</h3>
+                {% if product_tags %}
+                
+                {% for tag in product_tags %}
+                {% if tag.product_tags.New %}
+                <span class="alert alert-success col-3 m-1"><strong> New ✔ </strong></span>
+                {% endif %}
+                {% if tag.product_tags.Limited %}
+                <span class="alert alert-success col-3 m-1"><strong> Limited ✔ </strong></span>
+                {% endif %}
+                {% if tag.product_tags.Ondemand %}
+                <span class="alert alert-success col-3 m-1"><strong> Ondemand ✔ </strong></span>
+                {% endif %}
+                {% if tag.product_tags.Viral %}
+                <span class="alert alert-success col-3 m-1"><strong> Viral ✔ </strong></span>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                <span></span>
+                {% endif %}            
+            </div>
+            <div class="col-md-6">
+                {% if product.quantity and product.in_stock %}
+                <p><strong><i>{{ product.quantity }} Units</i></strong></p>
+                {% else %}
+                <p><strong><i>{{ product.ProductName }} is not available!!</i></strong></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showColor(encodedColor, color_id) {
+        const color = encodedColor.replace(/ /g, '_');
+        var containers = document.getElementsByClassName('image-container');
+        for (var i = 0; i < containers.length; i++) {
+            containers[i].style.display = 'none';
+        }
+        document.getElementById('container-' + color).style.display = 'block';
+
+        // Change the main image to the first image of the selected color group
+        var firstImageSrc = document.querySelector('#container-' + color + ' img').src;
+        document.getElementById('mainImage').src = firstImageSrc;
+        disaible_sizes_for_colors(color_id)
+        var updateButton = document.getElementById('update');
+        updateButton.setAttribute('onclick', `replace_action('update_cart', '{{ product.id }}', ${color_id})`);
+    }
+
+    function changeMainImage(imageSrc) {
+        document.getElementById('mainImage').src = imageSrc;
+    }
+
+    function disaible_sizes_for_colors(color_id) {
+        const color_container = document.getElementById(`color_${color_id}_section`);
+        const all_containers = document.querySelectorAll('.color-section');
+        
+        all_containers.forEach(container => {
+            if (container !== color_container) {
+                const inputs = container.querySelectorAll('input');
+                inputs.forEach(input => {
+                    if (input.name === 'sizes'){
+                      input.setAttribute('disabled', 'disabled');
+                      input.checked = false;
+                    }
+                });
+            } else {
+                const inputs = container.querySelectorAll('input');
+                
+                inputs.forEach(input => {
+                    input.removeAttribute('disabled');
+                });
+            }
+        });
+      }    
+</script>
+
+<div class="container my-6">
+    <hr>
+    <hr>
+    <hr>
+    <h2 id='related_to' class="mb-4 fs-4 text-center">Related items</h2>
+
+    <div id='related_items' class="row row-cols-1 row-cols-md-3 g-3">
+        {% for item in related_products %}
+        <div class="col-xs-12 col-sm-4  col-lg-2 m-2"> <!-- Added margin-bottom for spacing -->
+            <!--<a href="{% url 'product:detail' pk=item.id|add:0 %}">-->
+            {% if item.in_stock %}
+                <div class="px-3">
+                    <div class="card py-2"> <!-- Added border and rounded classes for styling -->
+                        {% with item.images.first as first_image %}
+                            {% if first_image %}
+                                <img src="{{ first_image.Product_Image.url }}" alt="{{ item.ProductName }}" class="img-fluid mb-3"> <!-- Added img-fluid and margin-bottom classes -->
+                            {% else %}
+                                <!-- Placeholder image or alternative content -->
+                                <p class="alert alert-danger ms-1 me-1">No image available !</p>
+                            {% endif %}
+                        {% endwith %}
+                        <div class="">
+                           <div class="text-center">
+                                <h3 class="h5 ">{{ item.ProductName }}</h3>
+                                <p>Price: {{ item.ProductPrice }} DH</p>
+                            </div>
+                        </div>
+                        {% if request.user.username == 'ILiac_Ak0' and request.user.is_authenticated %}
+                        <div class="mt-4 me-4 p-4 bg-white rounded-xl">
+                            <div class="row">
+                                <div class="col-6 rounded-xl">
+                                    <a href="{% url 'product:detail' pk=item.id|add:0 %}" class="btn btn-primary me-1">View</a>
+                                </div>
+                                <div class="col-6 rounded-xl">
+                                   <a href="{% url 'product:delete' id=item.id|add:0 %}" class="btn btn-danger ms-1">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %} 
+                        <a class="btn btn-primary ms-3 me-3" href="{% url 'product:detail' pk=item.id|add:0 %}">View Product</a>
+                    {% endif %}
+                    
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container my-6">
+    <div id="reviews7">
+
+    </div>
+</div>
+
+<div class="container my-6">
+    <hr>
+    <hr>
+    <hr>
+    <h2 id='reviews_for' class="mb-4 fs-4 text-center">Reviews</h2>
+
+    <div id='reviews' class="row">
+
+    </div>
+</div>
+
+
+{% endblock %}

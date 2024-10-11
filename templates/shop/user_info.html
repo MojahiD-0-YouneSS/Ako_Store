@@ -1,0 +1,356 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}user infos{% endblock title %}
+
+
+
+{% block content %}
+    <div class="row mt-4">
+        <h1>User Information</h1>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Profile</h2>
+            </div>
+            <div class="panel-body">
+                    
+                <div class="row">
+                
+                    {% if user_profile %}
+                    <div class="col-6">
+                        <p><strong>Username:</strong> <strong>{{ user_profile.user.username }}</strong></p>
+                        <p><strong>Email:</strong> {{ user_profile.user.email }}</p>
+                        <p><strong>Phone:</strong> {{ user_profile.user.phone }}</p>
+                        <p><strong>First Name:</strong> {% if user_profile.user.first_name %} {{user_profile.user.first_name}} {% else %} None {% endif %}</p>
+                        <p><strong>Last Name:</strong> {% if user_profile.user.last_name %} {{ user_profile.user.last_name }} {% else %} None {% endif %}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>last_login :</strong> {% if user_profile.user.last_login  %} {{ user_profile.user.last_login  }} {% else %} None {% endif %}</p>
+                        <p><strong>date joined :</strong> {% if user_profile.user.date_joined  %} {{ user_profile.user.date_joined  }} {% else %} None {% endif %}</p>
+                        <p><strong>Last visited:</strong> {% if last_seen %} {{ last_seen }} {% else %} None {% endif %}</p>
+                    </div>
+                    
+                    {% else %}
+                    <div class="col-6">
+                        <p><strong>Username:</strong> <strong>{{ user_info.full_name }}</strong></p>
+                        <p><strong>Email:</strong> {{ user_info.email }}</p>
+                        <p><strong>Phone:</strong> {{ user_info.phone }}</p>
+                        <p><strong>First Name:</strong> {% if user_profile.user.first_name %} {{user_profile.user.first_name}} {% else %} None {% endif %}</p>
+                        <p><strong>Last Name:</strong> {% if user_profile.user.last_name %} {{ user_profile.user.last_name }} {% else %} None {% endif %}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>last_login :</strong> {% if user_profile.user.last_login  %} {{ user_profile.user.last_login  }} {% else %} None {% endif %}</p>
+                        <p><strong>date joined :</strong> {% if user_profile.user.date_joined  %} {{ user_profile.user.date_joined  }} {% else %} None {% endif %}</p>
+                        <p><strong>Last visited:</strong> {% if last_seen %} {{ last_seen }} {% else %} None {% endif %}</p>
+                    </div>
+                                            
+                    {% endif %}
+    
+                </div>
+            </div>
+        </div>
+
+{% if promotions %}
+    
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Used Promotions</h2>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <div class="row">
+            {% for promo in promotions %}
+              <div class="col-6">
+            <li class="form-control mb-1">{{ promo.promo_code.code }} - {{ promo.promo_code.rate }}% - {{ promo.promo_code.closed }} - {% if promo.used %} Used {% else %} Not Used {% endif %}</li>
+              </div>
+            {% endfor %}
+            </div>
+        </ul>
+    </div>
+</div>
+
+{% endif %}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Cart</h2>
+            </div>
+            <div class="panel-body">
+                <p><strong>Cart ID:</strong> {{ cart.id }} _ <strong>Total:</strong> {{ cart.total }}</p>
+
+                <h3>Cart Items not checked</h3>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% if cart_items %}
+                            
+                        {% for item in cart_items %}
+                        <div class="row">
+                            <tr>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.product.reference_number }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.quantity }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.subtotal }} MAD
+                                        </div>
+                                    </td>
+                            </tr>
+                        </div>
+                        {% endfor %}
+                            
+                        {% else %}                            
+                        <tr>
+                        <div class="row">
+                                    <td>
+                                        <div class="col-4">
+                                            -
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            -
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            - MAD
+                                        </div>
+                                    </td>
+                        </div>
+                    </tr>                            
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+                <h3> pending Cart Items (order)</h3>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if total_order_items %}
+
+                        {% for item in total_order_items %}
+                            <tr>
+                                
+                                    
+                                <div class="row">
+                                    <td>
+                                        <div class="col-3">
+                                            {{ item.product.reference_number }} {{ item.product.color_size.product_color.color.name }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.quantity }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.subtotal }} MAD
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.order.status }}
+                                        </div>
+                                    </td>
+                                </div>
+                            </tr>
+                            {% endfor %}
+                                        
+                                {% else %}
+                            <tr>
+                                    
+                                <div class="row">
+                                    <td>
+                                        <div class="col-3">
+                                            -
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            -
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            - MAD
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            -
+                                        </div>
+                                    </td>
+                                </div>
+                            </tr>
+                                    
+                                {% endif %}
+                    </tbody>
+                </table>
+            </div>
+                <h3>validated Cart Items  (validated order)</h3>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if total_validated_items %}
+
+                        {% for item in total_validated_items %}
+                            <tr>
+                                
+                                    
+                                <div class="row">
+                                    <td>
+                                        <div class="col-3">
+                                            {{ item.product.reference_number }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.quantity }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.price_at_cancellation }} MAD
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.subtotal }} MAD
+                                        </div>
+                                    </td>
+                                </div>
+                            </tr>
+                            {% endfor %}
+                                
+                                {% else %}
+                            <tr>
+                                    
+                                <div class="row">
+                                    <td>
+                                        <div class="col-3">
+                                            -
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            -
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            - MAD
+                                        </div>
+                                    </td>
+                                </div>
+                            </tr>
+                                    
+                                {% endif %}
+                    </tbody>
+                </table>
+                <h3>canceled Cart Items (canceled order)</h3>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Quantity</th>
+                            <th>price at cancellation</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% if total_cancelled_order_items %}
+
+                        {% for item in total_cancelled_order_items %}
+                            <tr>
+                                
+                                    
+                                <div class="row">
+                                    <td>
+                                        <div class="col-3">
+                                            {{ item.product.reference_number }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.quantity }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.price_at_cancellation }} MAD
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            {{ item.subtotal }} MAD
+                                        </div>
+                                    </td>
+                                </div>
+                            </tr>
+                            {% endfor %}
+                                
+                                {% else %}
+                            <tr>
+                                    
+                                <div class="row">
+                                    <td>
+                                        <div class="col-3">
+                                            -
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            -
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            -
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-4">
+                                            - MAD
+                                        </div>
+                                    </td>
+
+                                </div>
+                            </tr>
+                                    
+                                {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+{% endblock content %}
+    

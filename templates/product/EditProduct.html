@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}
+{% if request.user.username == 'Iliac_AK0'%}
+    Add product
+{% endif %}
+{% endblock title %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{%static 'css/formSubmit.css'%}" />
+    <style>
+      input[type="file"] {
+        /* Your styling for the file input */
+        display: none; /* Hide the default file input */
+      }
+
+      /* Style the custom button */
+      .file-input-button {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        background-color: #4299e1;
+        color: #fff;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .file-input-button:hover {
+        background-color: #3182ce;
+      }
+      .label_holder {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #4a5568;
+      }
+    </style>
+{% endblock %}
+{% block content %}
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  <h2 class="text-2xl font-bold mb-6">Create New User</h2>
+  <!--{% url 'user_info:submit' %}-->
+  <form method="post" action="{% url 'user_info:submit' %}" class="text-center">
+    {% csrf_token %}
+    
+    <div class="mb-4">
+      <h3 class="text-lg font-bold mb-2">{{title}}</h3>
+      {{form.as_p}}
+    </div>
+    <div class="flex items-center justify-between">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

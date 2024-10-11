@@ -1,0 +1,58 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}fabric{% endblock title %}
+
+
+{% block content %}
+<style>
+    form {
+        max-width: 500px;
+        margin: auto;
+    }
+    
+    .form-label {
+        font-weight: bold;
+        color: #333;
+    }
+    
+    .form-control, .form-check-input {
+        border-radius: 0.25rem;
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+    }
+    
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }    
+</style>
+<form method="post" action='{% url "shop:fabric_adder" %}' class="p-4 rounded shadow-sm bg-light">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="{{ form.pure.id_for_label }}" class="form-label">{{ form.pure.label }}</label>
+        <div class="form-check">
+            {{ form.pure }}
+        </div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="{{ form.fabric.id_for_label }}" class="form-label">{{ form.fabric.label }}</label>
+        {{ form.fabric }}
+    </div>
+    
+    <div class="mb-3">
+        <label for="{{ form.product.id_for_label }}" class="form-label">{{ form.product.label }}</label>
+        {{ form.product }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>
+
+{% endblock content %}
+    

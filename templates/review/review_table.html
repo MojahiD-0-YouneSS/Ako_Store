@@ -1,0 +1,57 @@
+{% extends 'shop/shop_base.html' %}
+
+
+{% block content %}
+<h1>Reviews</h1>
+<div class="table-responsive mb-4">
+
+<table class="table table-bordered">
+    <thead class="thead-light">
+        <tr>
+            <th>User</th>
+            <th>Product</th>
+            <th>Rating</th>
+            <th>Content</th>
+            <th>Created At</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        {% if reviews %}
+            
+        {% for review in reviews %}
+        <tr>
+            <td>{{ review.user.username }}</td>
+            <td>{{ review.product.ProductName }}</td>
+            <td>{{ review.rating }} stars</td>
+            <td>{{ review.content }}</td>
+            <td>{{ review.created_at }}</td>
+            <td>{{ review.is_active|yesno:"Active,Inactive" }}</td>
+            <td>
+                {% if review.is_active %}
+                    <a href="{% url 'review:delete_review' review.id %}" class="btn btn-sm btn-danger">Deactivate</a>
+                {% endif %}
+                <a href="{% url 'review:reply_to_review' review.id %}"  class="btn btn-sm btn-success">Reply</a>
+            </td>
+        </tr>
+        {% endfor %}
+            
+        {% else %}
+        <tr>
+            <td> - </td>
+            <td> - </td>
+            <td> - </td>
+            <td> - </td>
+            <td> - </td>
+            <td> - </td>
+            <td> - </td>
+        </tr>
+
+        {% endif %}
+    </tbody>
+</table>
+</div>
+{% endblock content %}
+    

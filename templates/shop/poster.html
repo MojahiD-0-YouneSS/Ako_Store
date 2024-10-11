@@ -1,0 +1,79 @@
+{% load static %}
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Poster 1 -->
+        <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+                <a href="{% url 'filter:brand_filter' brand='Nike' %}">
+                    <img class="card-img-top" src="/media/advertizement_shop/67191600_480356799433328_7080316311158390784_n.jpg" alt="Section 1 Poster">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">Section 1</h4>
+                    <p class="card-text">Explore Section 1 of our web app.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Poster 2 -->
+        <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+                <a href="{% url 'filter:Category_filter' category='Down' %}">
+                    <img class="card-img-top" src="/media/advertizement_shop/67191600_480356799433328_7080316311158390784_n.jpg" alt="Section 2 Poster">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">Section 2</h4>
+                    <p class="card-text">Discover more in Section 2.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Poster 3 -->
+        <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+                <a href="{% url 'filter:Category_filter' category='Feet' %}">
+                    <img class="card-img-top" src="/media/advertizement_shop/67191600_480356799433328_7080316311158390784_n.jpg" alt="Section 3 Poster">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">Section 3</h4>
+                    <p class="card-text">Check out what's new in Section 3.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Poster 4 -->
+        <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+                <a href="{% url 'filter:Material_Fabric_filter' categoryC='coton' %}">
+                    <img class="card-img-top" src="/media/advertizement_shop/67191600_480356799433328_7080316311158390784_n.jpg" alt="Section 4 Poster">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">Section 4</h4>
+                    <p class="card-text">Explore the features in Section 4.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Poster 5 (optional) -->
+        <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+                <a href="{% url 'filter:Material_Fabric_filter' categoryC='leather' %}">
+                    <img class="card-img-top" src="/media/advertizement_shop/67191600_480356799433328_7080316311158390784_n.jpg" alt="Section 5 Poster">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">Section 5</h4>
+                    <p class="card-text">Discover what's inside Section 5 leadther products.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+                <a href="{% url 'filter:products' %}">
+                    <img class="card-img-top" src="/media/advertizement_shop/67191600_480356799433328_7080316311158390784_n.jpg" alt="Section 5 Poster">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">Section 6</h4>
+                    <p class="card-text">Discover products what's inside Section 5 leadther products.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+    

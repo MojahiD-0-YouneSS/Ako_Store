@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.header h1 {
+    margin-bottom: 20px;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.grid-button {
+    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.grid-button:hover {
+    background-color: #0056b3;
+}
+
+
+.dropdown-card {
+    display: none;
+    position: absolute;
+    top: 180%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+  }
+.dropdown-card-content {
+    display: block;
+    width: 400px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    padding: 1rem;
+}
+.dropdown-card::before {
+    content: "";
+    position: absolute;
+    top: -10px; /* Position the arrow above the card */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 10px 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent; /* Arrow color matches card background */
+    z-index: -1; /* Place the arrow behind the card */
+}
+  
+.dropdown-card::after {
+    content: "";
+    position: absolute;
+    top: -11px; /* Position the arrow's shadow slightly above the arrow */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 11px 11px 11px;
+    border-style: solid;
+    border-color: transparent transparent rgba(0, 0, 0, 0.15) transparent; /* Arrow shadow */
+    z-index: -2; /* Place the arrow shadow behind the arrow */
+}

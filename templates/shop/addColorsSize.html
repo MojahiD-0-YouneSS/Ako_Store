@@ -1,0 +1,86 @@
+{% extends 'shop/shop_base.html' %}
+ 
+{% block content %}
+<form method="post" class='form-control' action="{% url 'product:addColorSize' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p class="form-control">Selected Color Code: 
+        <strong>
+            <input type="text" id="user_input" name="user_input" value="" readonly>
+        </strong>
+    </p>
+    <button type="submit" onclick="setAction('add')" class="btn btn-success">Add</button>
+    <button type="submit" onclick="setAction('remove')" class="btn btn-danger">Remove</button>
+    <a href="{% url 'product:addProduct' %}" class="btn btn-primary">add product</a>
+    <input type="hidden" name="action" id="action" value="add">
+</form>
+<style>
+    #colorPadContainer {
+        position: relative;
+        width: 200px;
+        height: 50px;
+        margin-top: 20px;
+    }
+    
+    #colorPad {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display:block;
+        border-radius :5%;
+    }
+</style>
+<form method="post" action="#">
+    {% csrf_token %}
+    <div class="row">
+        <h4>Select Color</h4>
+        <div id="colorPadContainer" class="col-6 rounded">
+            <input type="color" id="colorPad" value="#000000">
+        </div>
+        <div class="col-4 mt-4">
+        </div>
+    </div>
+    <!--<button type="submit" class="btn btn-primary mt-4">Submit</button>
+    --><script>
+        // JavaScript goes here
+        document.addEventListener("DOMContentLoaded", function() {
+            var colorPad = document.getElementById('colorPad');
+            var colorCode = document.getElementById('user_input');
+            var colorPadContainer = document.getElementById('colorPadContainer');
+        
+            
+        
+            // Update the color code when a color is selected
+            colorPad.addEventListener('input', function() {
+                var selectedColor = colorPad.value;
+                colorCode.value = selectedColor;
+                colorPicker.value = selectedColor; // Update the hidden color input
+            });
+        
+            // Hide the color pad when the user clicks outside of it
+           /* document.addEventListener('click', function(event) {
+                if (!colorPadContainer.contains(event.target) && event.target !== colorPicker) {
+                    colorPad.style.display = 'none';
+                }
+            });*/
+        });
+    </script>
+
+</form>
+{% if form.errors %}
+<div class="errors">
+    <ul>
+        {% for field in form %}
+            {% for error in field.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+<script>
+    function setAction(action) {
+        document.getElementById('action').value = action;
+    }
+</script>
+{% endblock content %}

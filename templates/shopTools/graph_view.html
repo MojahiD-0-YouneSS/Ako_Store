@@ -1,0 +1,19 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2>{{ title }}</h2>
+        <div class="row">
+            <h6>{{total_sales.total_sales}}</h6>
+            {% for key, value in data.items %}
+            <div class="col-12 mt-3">
+                <h4>{{ key }} ({{ value }})</h4>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ value }}%;" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100">{{ value }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+    

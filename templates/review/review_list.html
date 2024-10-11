@@ -1,0 +1,78 @@
+<div class="row form-row">
+    <h3>Add a Review</h3>
+    <form method="POST" action="{% url 'review:post_review' id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
+</div>
+<hr class="mt-3 mb-3">
+<style>
+    .form-row {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+</style>
+
+{% for review in reviews %}
+    <div class="col-11 p-3 ms-3 mb-2 border rounded">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <p><strong class="mb-0">{{ review.user.username }} </strong><small>{{ review.created_at }}</small></p>
+            </div>
+            <div>
+                <span class="badge bg-warning text-dark">{{ review.rating }} stars</span>
+            </div>
+        </div>
+        <div class="mb-1 p-3 bg-light rounded">
+            <p>{{ review.content }}</p>
+        </div>
+        <div class='text-start' >
+            
+            {% if review.replies_data %}
+            <div class="review">
+            {% for reply in review.replies.all %}
+            {% if reply.is_active %}
+            <div class="ms-4">
+                <p><strong class="mb-0">SHOP staff </strong><small>- {{ reply.created_at }}</small></p>
+            </div>
+
+            <div class="mb-1 p-3 bg-light rounded ms-4" style="width:60%;">                
+                <p>{{ reply.reply_data }} </p>
+                {% if request.user.is_staff or request.user.username == 'ILiac_Ak0' %}
+                <div class="text-end">
+                <a href="{% url 'review:hide_reply' reply.id %}" class="btn btn-sm btn-danger">Hide</a>
+                </div>
+                {% endif %}
+                    
+            </div>
+            {% endif %}
+    
+            {% endfor %}
+            </div>
+    
+            {% endif %}
+                
+        </div>
+        <div class="text-start">
+            {% if request.user.is_staff or request.user.username == 'ILiac_Ak0' %}
+            <form method="POST" action="{% url 'review:reply_to_review' review.id %}">
+                <div class="text-end">
+                <a href="{% url 'review:delete_review' review.id %}" class="btn btn-sm btn-danger">Hide</a>
+                <a href="{% url 'review:ban_user' review.user.id %}" class="btn btn-sm btn-danger">Ban</a>
+                <button type="submit" class="btn btn-sm btn-primary">Reply</button>
+                </div>
+                {% csrf_token %}
+                <div style="width:40%;" class="ms-4 me-4">
+                <h6>Reply:</h6>
+                {{reply_form.reply_data}}
+                </div>
+            </form>
+            {% else %}
+            <div class="text-end">
+            <a href="{% url 'review:delete_review' review.id %}" class="btn btn-sm btn-danger">Hide</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

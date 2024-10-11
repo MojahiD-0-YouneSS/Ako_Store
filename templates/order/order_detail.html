@@ -1,0 +1,93 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}User Orders{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+<h1>Orders for "{{ order.user.username }}"</h1>
+<ul>
+                    <div class="container mt-5">
+                      <div class="card">
+                          <div class="card-header bg-primary text-white">
+                              <h2>Order #{{ order.id }} Details</h2>
+                          </div>
+                          <div class="card-body">
+                              <!-- Order Info -->
+                              <div class="row mb-4">
+                                  <div class="col-md-6">
+                                      <h4>Order Information kkokokok</h4>
+                                      <p><strong>Order ID:</strong> {{ order.id }}</p>
+                                      <p><strong>Date:</strong> {{ order.created_at}}</p>
+                                      <p><strong>Status:</strong> <span style="color:orange; font-weight:700;">{{ order.status }}</span></p>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <h4>Shipping Information</h4>
+                                      <p><strong>Name:</strong> {{ shipping_info.full_name }}</p>
+                                      <p><strong>Address:</strong> {{ shipping_info.address }}</p>
+                                      <p><strong>City:</strong> {{ shipping_info.city }}</p>
+                                      <p><strong>Postal Code:</strong> {{ shipping_info.code }}</p>
+                                      <p><strong>Country:</strong> {{ order.shipping_country }} Morocco</p>
+                                      <p><strong>shipping status:</strong> <span style="color:orange; font-weight:700;">{{ order.shipping_country }} not shipped ❌</span></p>
+                                  </div>
+                              </div>
+                  
+                              <!-- Order Items -->
+                              <h4>Order Items</h4>
+                              <div class="table-responsive mb-4">
+                                  <table class="table table-bordered">
+                                      <thead class="thead-light">
+                                          <tr>
+                                              <th>Product</th>
+                                              <th>Quantity</th>
+                                              <th>Price</th>
+                                              <th>Total</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          {% for entry in product_cost %}
+                                          <tr>
+                                              <td>{{ entry.item.product.ProductName }}</td>
+                                              <td>{{ entry.item.quantity }}</td>
+                                              <td>{{ entry.item.product.ProductPrice }} MAD</td>
+                                              <td>{{ entry.subtotal }} MAD</td>
+                                          </tr>
+                                          {% endfor %}
+
+                                      </tbody>
+                                  </table>
+                              </div>
+                  
+                              <!-- Order Summary -->
+                              <h4>Order Summary</h4>
+                              <div class="row">
+                                  <div class="col-md-6 offset-md-6">
+                                      <ul class="list-group">
+                                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                                              <span>Subtotal:</span>
+                                              <span>{{ total }} MAD</span>
+                                          </li>
+                                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                                              <span>Shipping:</span>
+                                              <span>{{ order.shipping_cost }} MAD</span>
+                                          </li>
+                                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                                              <span>Total:</span>
+                                              <span class="font-weight-bold">{{ total }} MAD</span>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                  
+                              <!-- Order Actions -->
+                              <div class="row mt-4">
+                                  <div class="col-md-12 text-right">
+                                      <a href="{% url 'order:order_history' %}" class="btn btn-secondary">Back to Order History</a>
+                                      <a href="{% url 'order:valid_order' order.id %}" class="btn btn-danger">Submit order</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+    </ul>
+</div>
+{% endblock %}

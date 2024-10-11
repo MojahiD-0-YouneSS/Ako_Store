@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+{% block title %}searched{% endblock title %}
+{% block content %}
+ 
+{% if query %}
+<h2>Results for :  "{{ query }}"</h2>
+{% if items %}
+ 
+{% for item in items %}        
+<div class="col-xs-12 col-sm-4  col-lg-2 m-2"> <!-- Added margin-bottom for spacing -->
+    <!--<a href="{% url 'product:detail' pk=item.id|add:0 %}">-->
+    {% if item.product.in_stock %}
+        <div class="px-3">
+            <div class="card py-2"> <!-- Added border and rounded classes for styling -->
+                {% with item.product.images.first as first_image %}
+                    {% if first_image %}
+                        <img src="{{ first_image.Product_Image.url }}" alt="{{ item.product.ProductName }}" class="img-fluid mb-3"> <!-- Added img-fluid and margin-bottom classes -->
+                    {% else %}
+                        <!-- Placeholder image or alternative content -->
+                        <p class="alert alert-danger ms-1 me-1">No image available !</p>
+                    {% endif %}
+                {% endwith %}
+                <div class="">
+                   <div class="text-center">
+                        <h3 class="h5 ">{{ item.product.ProductName }}</h3>
+                        <p>Price: {{ item.product.ProductPrice }} DH</p>
+                    </div>
+                </div>
+                {% if request.user.username == 'ILiac_Ak0' and request.user.is_authenticated %}
+                <div class="mt-4 me-4 p-4 bg-white rounded-xl">
+                    <div class="row">
+                        <div class="col-6 rounded-xl">
+                            <a href="{% url 'product:detail' pk=item.product.id|add:0 %}" class="btn btn-primary me-1">View</a>
+                        </div>
+                        <div class="col-6 rounded-xl">
+                           <a href="{% url 'product:delete' id=item.product.id|add:0 %}" class="btn btn-danger ms-1">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %} 
+                <a class="btn btn-primary ms-3 me-3" href="{% url 'product:detail' pk=item.product.id|add:0 %}">View Product</a>
+            {% endif %}
+            
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endfor %}
+{% else %}
+  <p>No results found.</p>
+{% endif %}
+{% endif %}
+{% endblock content %}

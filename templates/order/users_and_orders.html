@@ -1,0 +1,23 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}Users and Orders{% endblock %}
+
+{% block extrahead %}
+<!-- Add any additional JavaScript or CSS here if needed -->
+{% endblock %}
+
+{% block content %}
+<h1>Users and Their Orders</h1>
+<ul>
+    {% for user_order in users_orders %}
+        <li>
+            <h2>User: {{ user_order.user.username }}</h2>
+            <ul>
+                {% for order in user_order.orders %}
+                    <li>Order ID: {{ order.id }}, Status: {{ order.status }}, Created At: {{ order.created_at }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

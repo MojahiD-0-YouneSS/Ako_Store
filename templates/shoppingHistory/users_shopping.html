@@ -1,0 +1,49 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block content %}
+<h1>Shopping History</h1>
+<div class="table-responsive mb-4">
+
+<table class="table table-bordered">
+    <thead class="thead-light">
+        <tr>
+            <th>User</th>
+            <th>Items</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        {% if history %}
+            
+        {% for details in history %}
+        <tr>
+            <td>{{ details.user.username }}</td>
+            <td>{% if details.orders.all %}
+                <ul>
+                    {% for order in details.orders.all %}
+                    {% for item in order.products.all %}
+                    <li>
+                        Name : {{item.ProductName}} || Price : {{item.ProductPrice}} || quantity : {{item.quantity}} || cannceld ? : {{order.is_canceled}} 
+                    </li>
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+                {% else %}
+                -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+            
+        {% else %}
+        <tr>
+            <td> - </td>
+            <td> - </td>
+        </tr>
+
+        {% endif %}
+    </tbody>
+</table>
+</div>
+{% endblock content %}
+    

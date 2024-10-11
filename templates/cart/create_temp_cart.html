@@ -1,0 +1,19 @@
+{% extends 'shop/shop_base.html' %}
+{% block content %}
+    <h1>Create Temporary Cart</h1>
+    <p>Note: By filling out this form, you will not receive monthly promotion codes.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+    {% if errors %}
+        <div>
+            <ul>
+                {% for field, error_list in errors.items %}
+                    <li>{{ field }}: {{ error_list|join:", " }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock content %}

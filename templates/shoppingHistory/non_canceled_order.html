@@ -1,0 +1,12 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}non_users canceled Order{% endblock %}
+
+{% block content %}
+<h1>canceled Orders for temprory users</h1>
+<ul>
+    {% for order in orders %}
+    <li><span  class="form-control mt-1" > Order id : {{order.id}} - cancelled at : {{order.cancelled_at}} - price_at_cancellation :{{ order.total }} MAD - original_order_id : {{ order.original_order_id }}   <a href="{% url 'order:canceled_non_order_detail_view' order.id %}" class="ms-4"><span class="btn btn-primary">View Order Detail</span></a> </span></li>
+    {% endfor %}
+</ul>
+{% endblock %}

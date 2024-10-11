@@ -1,0 +1,235 @@
+{% extends 'shop/shop_base.html' %}
+{% load static %}
+{% block title %} home {% endblock title %}
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'CSS/shop.css' %}">
+{% endblock extrastyle %}
+    
+{% block content %}
+<div class="button-grid"> 
+    <button class="grid-button btn btn-large  dropdown-hover">
+        <div class=" dropdown-hover"  style="position: relative;">
+            <span>Client</span>
+            <div class="dropdown-card">
+                <div class="dropdown-card-content">
+                    <div class="row">
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shop:regestred_clients' %}" class="btn btn-success">Regestrted</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shop:non_users' %}" class="btn btn-success">Non regstred</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shop:promotion' %}" class="btn btn-success">add Promotion</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shop:banned_user' %}" class="btn btn-success"> banned users</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shop:banned_non_user' %}" class="btn btn-success"> banned non users</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </button>
+
+    <button class="grid-button btn btn-large  dropdown-hover">
+        <div class=" dropdown-hover"  style="position: relative;">
+            <span>Products</span>
+            <div class="dropdown-card">
+                <div class="dropdown-card-content">
+                    <div class="row">
+                        <div class="col-5 m-1">
+                            <a href="{% url 'product:addProduct' %}" class="btn btn-success">Add Product</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shop:product_detail' %}" class="btn btn-success">check details</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'product:addColorSize' %}" class="btn btn-success">add feature</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'product:add_to_product' %}" class="btn btn-success">add to product</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'core:index' %}" class="btn btn-success">view product</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shop:delete_all' %}" class="btn btn-danger">delete all</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'search:add_label' %}" class="btn btn-success">add add_label</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'product:add_brand' %}" class="btn btn-success">add brand</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shop:fabric_adder' %}" class="btn btn-success">add fabric</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'product:one_time_product' %}" class="btn btn-success">one time product</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </button>
+
+    <button class="grid-button btn btn-large  dropdown-hover">
+        <div class=" dropdown-hover"  style="position: relative;">
+            <span>Tools</span>
+            <div class="dropdown-card">
+                <div class="dropdown-card-content">
+                    <div class="row">
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:total_sales_and_revenue' %}" class="btn btn-success">total sales and revenue</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:cancelled_orders' %}" class="btn btn-success">cancelled orders</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:cart_abandonment' %}" class="btn btn-success">cart abandonment</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:wishlist_activity' %}" class="btn btn-success">wishlist activity</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:most_viewed_products' %}" class="btn btn-success">most viewed products</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:product_reviews' %}" class="btn btn-success">product reviews</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:repeat_customers' %}" class="btn btn-success">repeat customers</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:promotion_effectiveness' %}" class="btn btn-success">promotion effectiveness</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:headline_performance' %}" class="btn btn-success">headline performance</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:customer_segmentation' %}" class="btn btn-success">customer segmentation</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:customer_lifetime_value' %}" class="btn btn-success">customer lifetime value</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:product_return_analysis' %}" class="btn btn-success">product return analysis</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:sentiment_analysis' %}" class="btn btn-success">sentiment analysis</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:geographical_sales' %}" class="btn btn-success">geographical sales</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shopTools:inventory_turnover' %}" class="btn btn-success">inventory turnover</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </button>
+    <button class="grid-button btn btn-large  dropdown-hover">
+        <div class=" dropdown-hover"  style="position: relative;">
+            <span>Orders</span>
+            <div class="dropdown-card">
+                <div class="dropdown-card-content">
+                    <div class="row">
+                        <div class="col-5 m-1">
+                            <a href="{% url 'order:pending' %}" class="btn btn-success">pending Orders</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'order:shopping_history_all' %}" class="btn btn-success">order history</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'order:list_all' %}" class="btn btn-success">view all orders</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'order:nonlist_all' %}" class="btn btn-success">non regestred users orders</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'order:canceled_orders' %}" class="btn btn-success">regestred users canceled orders</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'order:non_canceled_orders' %}" class="btn btn-success">non users canceled orders</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'order:show_valid_orders' %}" class="btn btn-success">show valid orders</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'order:show_non_valid_orders' %}" class="btn btn-success">show valid non orders</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </button>
+    <button class="grid-button btn btn-large  dropdown-hover">
+        <div class=" dropdown-hover"  style="position: relative;">
+            <span>Resiepts</span>
+            <div class="dropdown-card">
+                <div class="dropdown-card-content">
+                    <div class="row">
+                        <div class="col-5 m-1">
+                            <a href="{% url 'receipt:clientReceipt' %}" class="btn btn-success">client Receipt</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'receipt:adminReceipt'  %}" class="btn btn-danger">admin Receipt</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'receipt:generate_receipt'  %}" class="btn btn-danger">generate receipts</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </button>
+    <button class="grid-button btn btn-large  dropdown-hover">
+        <div class=" dropdown-hover"  style="position: relative;">
+            <span>SHOP</span>
+            <div class="dropdown-card">
+                <div class="dropdown-card-content">
+                    <div class="row">
+                        <div class="col-5 m-1">
+                            <a href="{% url 'headline:advertizment' %}" class="btn btn-success">Add advertisment</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'headline:ads_list'  %}" class="btn btn-danger">delete advertisment</a>
+                        </div>
+                        <div class="col-5 m-1">
+                            <a href="{% url 'shop:poster_uploader'  %}" class="btn btn-success"> add Poster</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </button>
+    <button class="grid-button btn btn-large  dropdown-hover">
+        <div class=" dropdown-hover"  style="position: relative;">
+            <span>REVIEWS</span>
+            <div class="dropdown-card">
+                <div class="dropdown-card-content">
+                    <div class="row">
+                        <div class="col-5 m-1">
+                            <a href="{% url 'review:all' %}" class="btn btn-success"> users reviews</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </button>
+    <a href="{% url 'core:index' %}" class="grid-button btn btn-large"><span>Button 8</span></a>
+    <a href="{% url 'core:index' %}" class="grid-button btn btn-large"><span>Button 9</span></a>
+    <a href="{% url 'core:index' %}" class="grid-button btn btn-large"><span>Button 10</span></a>
+    <a href="{% url 'core:index' %}" class="grid-button btn btn-large"><span>Button 11</span></a>
+    <a href="{% url 'core:base' %}" class="grid-button btn btn-large"><span>View as Client</span></a>
+</div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock%}
+    

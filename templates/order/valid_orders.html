@@ -1,0 +1,41 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}Users and Orders{% endblock %}
+
+{% block extrahead %}
+<!-- Add any additional JavaScript or CSS here if needed -->
+{% endblock %}
+
+{% block content %}
+<h1>Users and Their Orders</h1>
+<ul>
+    {% if orders %}
+    {% for order in orders %}
+        <li>
+            {% if non_user %}
+            <h2>User: {{ order.original_order_object.user.full_name }}</h2>
+            <span>valid since: {{ order.validated_at }}</span>
+            {% else %}
+            <h2>User: {{ order.original_order_object.user.username }}</h2>
+            <span>valid since: {{ order.validated_at }}</span>
+            {% endif %}
+            <ul>
+                {% for valid_order in order.original_order_object.products.all %}
+                    <li>Order ID: {{ valid_order.id }}, Status: {{ order.original_order_object.status }}, product: {{ valid_order.ProductName }}, {{valid_order.color_size.product_color.color.name}} , Created At: {{ order.original_order_object.created_at }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    {% else %}
+    <div class="container my-5">
+        <div class="alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">No Orders Found</h4>
+            <p class="mb-0">It looks like you haven't recieved any orders yet. Start looking at available orders!</p>
+            <hr>
+            <a href="#" class="btn btn-primary">Start Shipping</a>
+        </div>
+    </div>
+    
+    {% endif %}
+</ul>
+{% endblock %}

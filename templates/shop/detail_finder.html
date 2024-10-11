@@ -1,0 +1,83 @@
+{% extends 'shop/shop_base.html' %}
+{% load static %}
+{% block title %} product detail {% endblock title %}
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'CSS/formSubmit.css' %}">
+{% endblock extrastyle %}
+
+{% block extrahead %}
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+        // This function will be executed when the page is fully loaded
+    });
+    function loadProducts() {
+        fetch("#")
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('content').innerHTML = html;
+            });
+    }
+</script>
+{% endblock%}
+    
+    
+{% block content %}
+    <div class="row">
+        <div class="col-10">
+            <form method="post" action="{% url 'shop:product_detail' %}" class="form-control product_id">
+                <div class="row">
+                    <div class="col-7">
+                                {% csrf_token %}
+                                {{ form.input_data }}
+                    </div>
+                    <div class="col-3 mt-2">
+                                {{ form.element }}
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary">Go to Product</button>
+                    </div>
+                </div>
+            </form>
+        
+        </div>
+    </div>
+    <div class="row">
+        <div id="content">
+            <div class="container">
+                <h1>Products List</h1>
+                <div class="row">
+                    {% for product in products %}
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="card p-2">
+                                {% if product.ProductName %}
+                                <h2>{{ product.ProductName }}</h2>
+                                <p>{{ product.ProductDescription }}</p>
+                                <p><strong>reference number:</strong> {{ product.reference_number }}</p>
+                                {% if product.images.first %}
+                                
+                                {% with product.images.first as first_image %}
+                                <img src="{{ first_image.Product_Image.url }}" alt="{{ product.ProductName }}" class="img-responsive" style="width: 200px; height: 200px;">
+                                {% endwith %}                                    
+                                {% else %}
+                                <p>No Image</p>
+                                {% endif %}
+                                {% else %}
+                                <h2>{{ product.product.ProductName }}</h2>
+                                <p>{{ product.product.ProductDescription }}</p>
+                                <p><strong>reference number:</strong> {{ product.product.reference_number }}</p>
+                                {% if product.product.images.first %}
+                                <img src="{{ product.product.images.first.Product_Image.url }}" alt="{{ product.product.ProductName }}" class="img-responsive" style="width: 200px; height: 200px;">
+                                {% else %}
+                                <p>No Image</p>
+                                {% endif %}                                
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+  {% endblock %}

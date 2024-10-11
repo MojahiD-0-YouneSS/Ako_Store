@@ -1,0 +1,33 @@
+
+  <div class="button_container" id="button_container">
+    <div class="center" id="center">
+        <div class="social-icons">
+          <a href="#" class="icon facebook" id="facebook" title="facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="icon twitter" id="twitter" title="twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="icon instagram" id="instagram" title="instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="icon linkedin" id="linkedin" title="linkedin"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="button" id="mainButton">
+            <div class="icon contact"><i class="fas fa-envelope"></i></div>
+        </div>
+    </div>
+      
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      function socialIcons(){
+      const container = document.getElementById('button_container');
+      const socialIcons = document.querySelector('.social-icons');
+
+      container.addEventListener('mouseenter', () => {
+        socialIcons.classList.add('active');
+      });
+
+      container.addEventListener('mouseleave', () => {
+        socialIcons.classList.remove('active');
+      });
+    };
+    });
+  </script>
+  

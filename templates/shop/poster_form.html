@@ -1,0 +1,23 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}posters{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Contact Us</h2>
+    <form method="post" action="{% url 'shop:poster_uploader' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.as_p }}
+            {% if form.errors %}
+                <div class="alert alert-danger mt-2">
+                    {{ form.name.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% endblock content %}
+    

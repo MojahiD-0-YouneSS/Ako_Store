@@ -1,0 +1,17 @@
+{% extends 'shop/shop_base.html' %}
+
+
+{% block content %}
+<div class="row mt-4">
+    {{mssg}}
+    {% for user in users %}
+        <div class="col-5 col-xs-6">
+            <a href="{% url 'shop:regestred_clients_infos' user.username %}" class="nav-link"> <p class="form-control"><strong class="ms-3 me-4">Username    :  <i> {{user.username}} </i> </strong>  || <strong class="ms-4">is_active : </strong> {% if user.is_active %} <strong style="color:green;">YES</strong> {% else %} <strong style="color:red;"> NO</strong>{% endif %}</p></a>
+        </div>
+        <div class="col-1 col-xs-3">
+            <a href="{% url 'client:ban_client' user.username %}" class="btn btn-sm btn-danger">Ban</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}
+    

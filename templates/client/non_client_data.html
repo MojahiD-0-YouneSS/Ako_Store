@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}
+    regester your credentials
+{% endblock title %}
+{% block extrastyle %}
+<link rel="stylesheet" href="{%static 'css/formSubmit.css'%}" />
+{% endblock extrastyle %}
+
+{% block content %}
+<div class="form-container">
+  <h2 class="text-2xl text-center mb-4">Register Your Credentials</h2>
+  <form method="post" action="{% url 'client:nonRegestredinformations' %}" class="text-center regestered_cilent_form">
+    {% csrf_token %}
+    <div class="mb-4">
+      {{noneRgestredClientDataForm.as_p}}
+    </div>
+    <div class="row">
+      <div class="col-4">
+      </div>
+      <div class="col-4">
+        <button type="submit" class="btn btn-primary">
+          Submit
+        </button>
+      </div>
+    <div>
+  </form>
+</div>
+{% endblock %}

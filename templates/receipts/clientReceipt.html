@@ -1,0 +1,102 @@
+{% extends 'shop/shop_base.html' %}
+{% block title %}Receipt{% endblock title %}
+{% block content %}
+    <style>
+        receipt_container {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .receipt {
+            border: 1px solid #ccc;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            width: 300px;
+            margin: 0 auto;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            text-align: center;
+        }
+        .receipt-info {
+            margin-top: 20px;
+        }
+        .receipt-info p {
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .client-info {
+            border: solid green;
+            border-radius: 5%;
+            text-align: center;
+            margin-left: 0 ;
+            max-width: 50%;
+        }
+        
+        .client-info p {
+            margin: 5px 0;
+        }
+        h3{
+            margin: 0;
+        }
+        #bye{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt_container">
+        {% for receipt in receipts %}        
+    <div class="receipt">
+        <h3> date {{ receipt.creationDate}} </h3>
+        <div class='client-info'>
+            <p id='client-name'><strong> {{ client.full_name }} </strong></p>
+            <p id='client-address'><strong> {{ client.address }} </strong></p>
+            <p id='client-city'><strong> {{ client.city }} </strong></p>
+            <p id='client-phone'><strong> Phone: </strong> <i>{{receipt.receipt_reference}} {{ client.phone }}</i></p>
+        </div>
+        <h2>Receipt</h2>
+        <div class="receipt-info">
+            <p><strong>ID:</strong> {{receipt.receipt_reference}}</p>
+            <p><strong>Expiration Date:</strong> {{ receipt.expiredateValue }}</p>
+            <p><strong>Expired :</strong> {{ receipt.expiredReceipts }}</p>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }}   </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id='bye'> <strong><i> we hopee to see you again peace be apon you!</i></strong></div>
+    <a href="{% url 'receipt:reciept_pdf' receipt.receipt_reference %}" class="btn btn-sm btn-primary">DownLowd pdf version</a>
+    </div>
+    {% endfor %}
+
+    </div>
+
+{% endblock content %}

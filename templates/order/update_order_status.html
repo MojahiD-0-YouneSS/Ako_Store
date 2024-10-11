@@ -1,0 +1,15 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}Update Order Status{% endblock %}
+
+{% block extrahead %}
+<!-- Add any additional JavaScript or CSS here if needed -->
+{% endblock %}
+
+{% block content %}
+<h1>Update Order Status</h1>
+<p>Order ID: {{ order.id }}</p>
+<p>User: {{ order.user.username }}</p>
+<p>Status: {{ order.status }}</p>
+<p>{{ message }}</p>
+{% endblock %}

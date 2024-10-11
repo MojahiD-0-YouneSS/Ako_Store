@@ -1,0 +1,91 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}
+    Profile
+{% endblock title %}
+{% block extrastyle %}
+{% endblock extrastyle %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header text-center text-white">
+            <div class="row">
+                <div class="col-4">
+                </div>
+                    <div class="col-4">
+                        <h2 class=" bg-primary rounded p-1">Client Profile</h2>
+                    </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <!--https://via.placeholder.com/150-->
+                    <img src="{% static 'img/client_profile_picture.jpg' %}" width="250px" height="250px" class="rounded-circle img-thumbnail" alt="Client Photo">
+                </div>
+                <div class="col-md-8">
+                    {% if user_profile %}
+                        <h4 class="card-title">{{ user_profile.full_name }}</h4>
+                        <p class="card-text"><strong>Phone:</strong> {{ user_profile.phone }}</p>
+                    {% else %}
+                        <h4 class="card-title">********</h4>
+                        <p class="card-text"><strong>Phone:</strong> ***********</p>
+                    {% endif %}
+                        <p class="card-text"><strong>Username:</strong> {{ user.username }}</p>
+                    <p class="card-text"><strong>Email:</strong> {% if user_profile.email %} 
+                        {{ user_profile.email }} 
+                        {% else %}
+                        {{ user.email }}
+                        {% endif %}
+                    </p>
+                    {% if user_profile %}
+                    <p class="card-text"><strong>Location:</strong> {{ user_profile.address }}, {{ user_profile.city }}, MOROCCO</p>
+                    <p class="card-text"><strong>Address:</strong> {{ user_profile.address }}</p>
+                    <p class="card-text"><strong>City:</strong> {{ user_profile.city }}</p>
+                    {% else %}
+                    <p class="card-text"><strong>Location:</strong> ***, MOROCCO</p>
+                    <p class="card-text"><strong>Address:</strong> ***</p>
+                    <p class="card-text"><strong>City:</strong> ***</p>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="card-subtitle mb-2 text-muted">Shopping Behavior</h5>
+                    <p class="card-text"><strong>Frequency of Purchases:</strong> Monthly</p>
+                    <p class="card-text"><strong>Average Spend:</strong> $150 per visit</p>
+                    <p class="card-text"><strong>Preferred Shopping Time:</strong> Weekends</p>
+                    <p class="card-text"><strong>Purchase Channels:</strong> Online and In-store</p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="card-subtitle mb-2 text-muted">Personal Preferences</h5>
+                    <p class="card-text"><strong>Size:</strong> Medium</p>
+                    <p class="card-text"><strong>Favorite Colors:</strong> Blue, Black</p>
+                    <p class="card-text"><strong>Preferred Styles:</strong> Casual, Formal</p>
+                    <p class="card-text"><strong>Fabric Preferences:</strong> Cotton, Wool</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="card-subtitle mb-2 text-muted">Engagement and Loyalty</h5>
+                    <p class="card-text"><strong>Membership:</strong> Premium Member</p>
+                    <p class="card-text"><strong>Purchase History:</strong> 20 purchases in the last year</p>
+                    <p class="card-text"><strong>Feedback:</strong> Very satisfied with product quality and customer service</p>
+                    <p class="card-text"><strong>Social Media Interaction:</strong> Frequently engages on Instagram</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-center bg-light">
+            <button class="btn btn-primary">Edit Profile</button>
+            <button class="btn btn-secondary"><a href="{% url 'order:order_history' %}" class="nav-link">View Purchase History</a></button>
+            <a href="{% url 'client:informations'%}" class="btn btn-success">add credentials</a>
+            <a href="{% url 'core:logout' %}" class="btn btn-danger">Log Out</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+    

@@ -1,0 +1,16 @@
+{% extends 'shop/shop_base.html' %}
+
+{% block title %}Pending Orders{% endblock %}
+
+{% block extrahead %}
+<!-- Add any additional JavaScript or CSS here if needed -->
+{% endblock %}
+
+{% block content %}
+<h1>Pending Orders</h1>
+<ul>
+    {% for order in pending_orders %}
+       <a href="{% url 'order:shop_order_detail' order.id  %}"  class="nav-link"> <li class="form-control mt-1"><strong> Order ID:</strong> {{ order.id }} || <strong>  User:</strong>  {{ order.user.username }} || <strong>  Created At: </strong>  {{ order.created_at }}</li></a><a href="{% url 'order:cancel_order' order.id %}" class="btn btn-danger m-1"> Cancel ! n</a>
+    {% endfor %}
+</ul>
+{% endblock %}

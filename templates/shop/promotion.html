@@ -1,0 +1,106 @@
+{% extends 'shop/shop_base.html' %}
+
+
+{% block extrahead %}
+<script >
+    function getNewPromoCode() {
+        fetch("{% url 'shop:get_promo_code' %}")
+            .then(response => response.json())
+            .then(html => {
+                //let obj = JSON.parse(html);
+                //let code = obj.promo_code;
+                document.getElementById('promo_code').value = html.promo_code;
+                document.getElementById('current_promo_code').innerHTML = html.promo_code;
+                });
+        }
+    function freezcode(code){
+        var url = "{%  url 'shop:freez_promo_code' promo_code=0 %}".replace('0', code) ;
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let statusText = data.status ?  'InValid': 'Valid' ;
+            let button_txt = data.status ?  'UnFreez' : 'Freez';
+            document.getElementById(`status-${code}`).innerText = statusText;
+            document.getElementById(`freez-btn-${code}`).innerText = button_txt;
+            
+
+            // Optionally, you can also update a message element if needed
+            // document.getElementById(`message-${code}`).innerText = data.message;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+{% endblock extrahead %}
+    
+{% block content %}
+<div class="row">
+<h1>Create Promotion</h1>
+<form method="post" action="{% url 'shop:promotion' %}">
+    {% csrf_token %}
+    <div class="row">
+        
+        {% if myerreur %}
+           <span class="alert alert-warning m-3">{{myerreur}}</span> 
+        {% endif %}
+            
+        <div class="col-4">
+            
+            {{ promotion_form.as_p }}
+            <input type="hidden" name="promo_code" id="promo_code" value="{{ initial_promo_code }}">
+        </div>
+        <div class="col-6">
+            <p class="form-control"><strong>Current Promo Code: </strong><span id="current_promo_code">{{ initial_promo_code }}</span></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <button type="submit" class="btn btn-primary">Create Promotion</button>
+        </div>
+        <div class="col-4">
+            <button type="button" onclick="getNewPromoCode()" class="btn btn-success">New Promo Code</button>
+        </div>
+        
+    </div>
+
+</form>
+</div>
+
+<div class="row">
+    
+    {% for code  in promotion_codes %}    
+    
+    {% if code %}
+    <div class="col-5 card m-1 mt-3">
+        <div class="col-4">
+            {% if message.status is None %}
+            {% elif message.status %}
+               <span class="alert alert-warning m-3">{{message.message}}</span> 
+            {% else %}
+               <span class="alert alert-success m-3">{{message.message}}</span> 
+            {% endif %}
+        </div>
+       <p class="mt-1"> 
+        <strong> code :</strong> {{code.code}} | 
+        <strong> rate :</strong> {{code.rate}}% |
+         <strong> closed :</strong>
+         <strong> <span id="status-{{ code.code }}" >
+            
+            {% if  code.closed %}
+             InValid
+            {% else %}
+             Valid
+            {% endif %}
+            </span> </strong>
+        </p><button id="freez-btn-{{code.code}}" type="button" onclick="freezcode('{{ code.code }}')" class=" btn btn-warning ms-5 mb-1" style="width:350px; font-weight:700;"> 
+        {% if code.closed %}
+        UnFreez
+        {% else %}
+        Freez
+        {% endif %}
+        </button>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock content %}
+    

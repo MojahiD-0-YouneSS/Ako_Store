@@ -1,0 +1,115 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Product Listing{% endblock %}
+
+{% block content %}
+<div class="filter-section col-2">
+    <h4>Filter by</h4>
+
+    <form method="POST" action="{% url 'filter:products' %}" id="filter-form">
+        {% csrf_token %}
+        <h4>brand</h4>
+
+        <div class="form-group ms-2">
+            {% for brand in brands %}
+            <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="brand-{{brand.id}}" name="brand" value='{{brand.name}}'>
+            <label class="form-check-label" for="brand-{{brand.id}}"><strong>{{brand.name}}</strong></label>
+           </div>
+            {% endfor %}
+        </div>
+        
+        <h4>wear category</h4>
+
+        <div class="form-group ms-2">
+            {% for category in pcp %}
+            <div class="form-check form-switch">
+             
+             {% if category.ProductCategoryP == 'Top' %}
+             <input class="form-check-input" type="checkbox" id="category-{{category.id}}" name="categoryP" value='{{category.ProductCategoryP}}'>
+             <label class="form-check-label" for="category-{{category.id}}"><strong>{{category.ProductCategoryP}}</strong> 👕 </label>
+             {% endif %}
+             {% if category.ProductCategoryP == 'Down' %}
+             <input class="form-check-input" type="checkbox" id="category-{{category.id}}" name="categoryP" value='{{category.ProductCategoryP}}'>
+             <label class="form-check-label" for="category-{{category.id}}"><strong>{{category.ProductCategoryP}}</strong> 👖 </label>
+             {% endif %}
+             {% if category.ProductCategoryP == 'Feet' %}
+             <input class="form-check-input" type="checkbox" id="category-{{category.id}}" name="categoryP" value='{{category.ProductCategoryP}}'>
+             <label class="form-check-label" for="category-{{category.id}}"><strong>{{category.ProductCategoryP}}</strong> 👞 </label>
+             {% endif %}
+                
+            </div>
+            {% endfor %}
+        </div>
+
+        <h4>wear info</h4>
+
+        <div class="form-group ms-2">
+            {% for category in pcc %}
+            <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="category-{{category.id}}" name="categoryC" value='{{category.ProductCategoryC}}'>
+            <label class="form-check-label" for="category-{{category.id}}"><strong>{{category.ProductCategoryC}}</strong></label>
+            </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2 mb-2" id="apply-filters">Apply Filters</button>
+    </form>
+</div>
+
+<div id="products-container" class="col-10">
+<div class="row">
+    
+    {% if items %}        
+        {% for item in items %}
+            {% if item.id %}
+                <div class="col-xs-12 col-sm-4  col-lg-2 m-2"> <!-- Added margin-bottom for spacing -->
+                    <a href="{% url 'product:detail' pk=item.id|add:0 %}">
+                    {% if item.in_stock %}
+                        <div class="px-3">
+                            <div class="card py-4"> <!-- Added border and rounded classes for styling -->
+                                {% with item.images.first as first_image %}
+                                    {% if first_image %}
+                                        <img src="{{ first_image.Product_Image.url }}" alt="{{ item.ProductName }}" class="img-fluid mb-3"> <!-- Added img-fluid and margin-bottom classes -->
+                                    {% else %}
+                                        <!-- Placeholder image or alternative content -->
+                                        <p class="alert alert-danger">No image available !</p>
+                                    {% endif %}
+                                {% endwith %}
+                                <div class="">
+                                   <div class="text-center">
+                                        <h3 class="h5 ">{{ item.ProductName }}</h3>
+                                        <p> {{ item.ProductPrice }} MAD</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    </a>
+                </div>
+                
+            {% endif %}
+        {% endfor %}
+    {% else %}
+    <div class="container text-center mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card shadow-sm p-4">
+                    <h1 class="display-4 text-danger">Product Not Found</h1>
+                    <p class="lead">Sorry, we couldn't find the product you're looking for.</p>
+                    <p class="text-muted">Try searching for another product or go back to the products page.</p>
+                    
+                    <div class="input-group my-4">
+                    </div>
+                    
+                    <a href="{% url 'filter:products' %}" class="btn btn-outline-secondary">Back to Products</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,15 @@
+<div class="container">
+    <h2>Reply to Review</h2>
+    
+    <p><strong>{{ review.user.username }}</strong> - {{ review.rating }} stars</p>
+    <p>{{ review.content }}</p>
+    <p><small>{{ review.created_at }}</small></p>
+    
+    <hr>
+    
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Reply</button>
+    </form>
+</div>

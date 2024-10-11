@@ -1,0 +1,54 @@
+{% extends 'shop/shop_base.html' %}
+{% load static %}
+
+{% block title %}Browsing{% endblock %}
+
+{% block content %}
+<!-- d-flex flex-norap-->
+<div class="row position-relative">
+    <h2 class="styled-heading"><i>Products</i></h2>
+</div>
+<div class="row">
+
+    {% for item in items %}        
+            <div class="col-xs-12 col-sm-4  col-lg-2"> <!-- Added margin-bottom for spacing -->
+                <!--<a href="{% url 'product:detail' pk=item.id|add:0 %}">-->
+                {% if item.in_stock %}
+                    <div class="px-1">
+                        <div class="card py-3"> <!-- Added border and rounded classes for styling -->
+                            {% with item.images.first as first_image %}
+                                {% if first_image %}
+                                    <img src="{{ first_image.Product_Image.url }}" alt="{{ item.ProductName }}" class="img-fluid mb-3"> <!-- Added img-fluid and margin-bottom classes -->
+                                {% else %}
+                                    <!-- Placeholder image or alternative content -->
+                                    <p class="alert alert-danger ms-1 me-1">No image available !</p>
+                                {% endif %}
+                            {% endwith %}
+                            <div class="">
+                               <div class="text-center">
+                                    <h3 class="h5 ">{{ item.ProductName }}</h3>
+                                    <p>Price: {{ item.ProductPrice }} DH</p>
+                                </div>
+                            </div>
+                            {% if request.user.username == 'ILiac_Ak0' and request.user.is_authenticated %}
+                            <div class="mt-4 me-2 p-4 bg-white rounded-xl">
+                                <div class="row">
+                                    <div class="col-1 rounded-xl  me-3">
+                                        <a href="{% url 'product:detail' pk=item.id|add:0 %}" class="btn btn-sm btn-primary">View</a>
+                                    </div>
+                                    <div class="col-1 rounded-xl ms-3 me-3">
+                                       <a href="{% url 'product:delete' id=item.id|add:0 %}" class="btn btn-sm btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %} 
+                            <a class="btn btn-primary ms-3 me-3" href="{% url 'product:detail' pk=item.id|add:0 %}">View Product</a>
+                        {% endif %}
+                        
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+    {% endfor %}
+</div>
+{% endblock %}

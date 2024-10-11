@@ -1,0 +1,13 @@
+    <form method="post" class="form-control" action="{% url 'shop:dropdown' %}" style>
+      {% csrf_token %}
+      
+      <div class="row pe-3">
+          <div class="form-group col-8">
+            <label for="element">Element</label>
+              {{ form.element}}
+          </div>
+          <div class="col-4 mt-4">
+               <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+      </div>
+  </form>
