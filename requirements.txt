@@ -14,7 +14,9 @@ cssutils==2.9.0
 cycler==0.12.1
 decouple==0.0.7
 distlib==0.3.8
+dj-database-url==2.2.0
 Django==4.2.7
+django-heroku==0.3.1
 docutils==0.20.1
 executing==2.0.1
 filelock==3.13.1
@@ -76,5 +78,6 @@ urllib3==2.1.0
 virtualenv==20.25.1
 webencodings==0.5.1
 Werkzeug==3.0.3
+whitenoise==6.7.0
 zipp==3.17.0
 zopfli==0.2.3
