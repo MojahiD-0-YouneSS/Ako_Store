@@ -52,7 +52,7 @@ LOGGING = {
     },
 }
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+#SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # session settings
 
