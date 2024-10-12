@@ -15,7 +15,6 @@ from django.utils.translation import gettext_lazy as _
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 import django_heroku
-django_heroku.settings(locals())
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -194,3 +193,4 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+django_heroku.settings(locals())
