@@ -4,8 +4,12 @@ from django.utils.translation import gettext as _
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Client(models.Model):
+
+class Client_User_Tag(models.Model):
     user =  models.OneToOneField(User, on_delete=models.CASCADE)
+    client =  models.OneToOneField('Client', on_delete=models.CASCADE)
+
+class Client(models.Model):
     full_name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     email = models.EmailField(max_length=50)
