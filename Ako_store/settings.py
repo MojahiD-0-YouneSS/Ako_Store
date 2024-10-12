@@ -15,6 +15,7 @@ from django.utils.translation import gettext_lazy as _
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 import django_heroku
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,10 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n9szflqa1wqvk4k+%-263k+j5i5prwj__zv-gogj=g2k4a!kky'
+#SECRET_KEY = 'django-insecure-n9szflqa1wqvk4k+%-263k+j5i5prwj__zv-gogj=g2k4a!kky'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'fallback-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False#True
+DEBUG = False
+#True
 
 ALLOWED_HOSTS = ['akostore-7aba52ebc511.herokuapp.com']
 
@@ -36,21 +39,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Application definition
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'ERROR',
-        },
-    },
-}
 
 #SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
@@ -99,6 +87,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'Ako_store.urls'
@@ -128,12 +118,14 @@ WSGI_APPLICATION = 'Ako_store.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': dj_database_url.config(conn_max_age=600)
+    
+}
+'''
+'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
+    }'''
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -184,8 +176,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 
