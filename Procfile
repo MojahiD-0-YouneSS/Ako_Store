@@ -1,1 +1,1 @@
-web: gunicorn Ako_store.wsgi
+web gunicorn cool_counters.wsgi:application --log-file -

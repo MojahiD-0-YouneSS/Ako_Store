@@ -1,0 +1,256 @@
+.itemlist {
+  border: solid white 2px;
+}
+
+/* Styles for the individual product items */
+.product-item {
+  border-radius: 5%;
+  display: block;
+  width: 100px; /* Adjust the width of each product item as needed */
+  height: 80px;
+  text-align: center;
+}
+
+.product-item:hover {
+  border-color: skyblue;
+}
+@media (max-width: 990px) {
+  #buttons2 {
+    display: block;
+  }
+  #buttons1,
+  #pic1 {
+    display: none;
+  }
+}
+@media (min-width: 990px) {
+  #buttons2 {
+    display: none;
+  }
+  #buttons1,
+  #pic1 {
+    display: block;
+  }
+}
+
+/*start sociall link buttons*/
+
+.button_container {
+  height: 100px;
+  width: 100px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  padding: 120px 25px 25px 120px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.center {
+  position: relative;
+}
+
+.button {
+  width: 60px;
+  height: 60px;
+  background-color: #4caf50;
+  border-radius: 50%;
+  position: relative;
+  z-index: 10;
+}
+
+.social-icons {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  top: -55px;
+  left: -55px;
+  pointer-events: none;
+  background-color: transparent; /* Ensure this is transparent */
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #555;
+  border-radius: 50%;
+  position: absolute;
+  transition: transform 0.3s, opacity 0.3s;
+  opacity: 0;
+  color: white;
+}
+
+.icon.contact {
+  padding: 30px;
+  opacity: 1;
+  background-color: #4caf50;
+  font-size: 24px;
+  position: relative;
+}
+
+.icon.facebook {
+  background-color: #3b5998;
+}
+.icon.twitter {
+  background-color: black;
+}
+.icon.instagram {
+  background-color: #e1306c;
+}
+.icon.linkedin {
+  background-color: green;
+}
+
+#facebook {
+  transform: translate(-50%, -50%);
+}
+#twitter {
+  transform: translate(-50%, -50%);
+}
+#instagram {
+  transform: translate(-50%, -50%);
+}
+#linkedin {
+  transform: translate(-50%, -50%);
+}
+#contact {
+  transform: translate(-50%, -50%);
+}
+
+.active .icon {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.active #facebook {
+  transform: translate(-30%, -100%);
+}
+
+.active #twitter {
+  transform: translate(-110%, -30%);
+}
+
+.active #instagram {
+  transform: translate(80%, -100%);
+}
+
+.active #linkedin {
+  transform: translate(-100%, 100%);
+}
+
+/*  .active #contact {
+    transform: translate(150%, 50%);
+  }*/
+
+/* brand */
+.brand-logo {
+  font-family: "Arial", sans-serif; /* Change the font family if needed */
+  font-weight: bold;
+  color: #333; /* Main text color */
+  letter-spacing: 0.1em; /* Adjust the spacing between letters for elongation */
+  display: inline-block; /* Ensure the element respects its content size */
+  padding: 0.5em 2em; /* Add some padding for better appearance */
+  border: 2px solid #333; /* Optional: border to make it stand out */
+  border-radius: 5px; /* Optional: rounded corners */
+  background-color: #f8f8f8; /* Optional: background color */
+}
+.brand-logo .highlight {
+  color: blue; /* Highlight color for a part of the text */
+}
+/* Adjust the envelope icon */
+/*end sociall link buttons*/
+
+.arrow-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100px; /* Set a fixed width for the arrows */
+  height: 100px; /* Set a fixed height for the arrows */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  border: none;
+  color: white;
+  font-size: 24px; /* Font size for the arrow icons */
+  cursor: pointer;
+  border-radius: 50%; /* Make the button circular */
+  z-index: 10;
+}
+
+.arrow-button.left {
+  left: 250px; /* Adjust this value to position the left arrow inside the container */
+}
+
+.arrow-button.right {
+  right: 250px; /* Adjust this value to position the right arrow inside the container */
+}
+
+.btn.arrow-left,
+.btn.arrow-right {
+  background-color: transparent;
+  border: none;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  outline: none;
+}
+
+.btn.arrow-left::before,
+.btn.arrow-right::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-top: 5px solid black;
+  border-right: 5px solid black;
+}
+
+.btn.arrow-left {
+  left: 28px; /* Adjust the position based on your layout */
+}
+
+.btn.arrow-left::before {
+  transform: rotate(-135deg);
+}
+
+.btn.arrow-right {
+  right: 28px; /* Adjust the position based on your layout */
+}
+
+.btn.arrow-right::before {
+  transform: rotate(45deg);
+}
+.btn.arrow-left::before,
+.btn.arrow-right::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-top: 5px solid black;
+  border-right: 5px solid black;
+}
+
+.price-input {
+    width: 70px;
+    height: 30px;
+    text-align: center;
+}
+.price-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.form-range {
+    flex-grow: 1;
+}
+
